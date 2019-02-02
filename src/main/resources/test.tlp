@@ -1,5 +1,23 @@
-let add of Function = (a of Int32, b of Int32) of Int32 {
-    a + b;
+let add = (a of Int32, b of Int32) of Int32 {
+    a + b
 };
 
-let six of Int32 = add(4, 2);
+let addition = add(4, 2);   // Int32: 6
+
+let test = (exampleLambda of Function) {
+    exampleLambda();
+};
+
+// Lambdas cannot see outside of their own scope.
+// For example, using the "addition" variable inside the anonymous function would product a compiler error
+test(() {
+    print("Hello!");
+});
+
+let fact = (num of Int64) of Int64 {
+    if num <= 1 {
+    }
+    //    1
+    //}
+    num * :self(num - 1)
+};

@@ -1,19 +1,20 @@
 package com.cjburkey.toylang.lang.expression;
 
+import com.cjburkey.toylang.lang.IScope;
 import com.cjburkey.toylang.lang.Parameter;
 import com.cjburkey.toylang.lang.ScopeContainer;
 import com.cjburkey.toylang.lang.Statement;
 import java.util.ArrayList;
 import java.util.Collection;
 
-public class FuncVal extends Expression {
+public class FuncVal extends Expression implements IScope {
     
     public String type;
     public final ArrayList<Parameter> parameters = new ArrayList<>();
-    public final ScopeContainer scope = new ScopeContainer();
+    private final ScopeContainer scope = new ScopeContainer();
     
     public FuncVal(String type, Collection<Parameter> parameters, Collection<Statement> statements) {
-        this.type = type;
+        this.type = (type == null) ? "Void" : type;
         if (parameters != null) this.parameters.addAll(parameters);
         if (statements != null) scope.statements.addAll(statements);
     }
@@ -34,6 +35,10 @@ public class FuncVal extends Expression {
         output.append(") returns ");
         output.append(type);
         return output.toString();
+    }
+    
+    public ScopeContainer scope() {
+        return scope;
     }
     
 }

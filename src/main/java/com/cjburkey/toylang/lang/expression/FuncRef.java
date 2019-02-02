@@ -22,16 +22,23 @@ public class FuncRef extends Expression {
     }
     
     public String toString() {
-        StringBuilder output = new StringBuilder("Function reference to \"");
-        output.append(name);
-        output.append("\" with arguments: {");
+        StringBuilder output = new StringBuilder();
+        if (name == null) {
+            output.append("Recursive function reference");
+        } else {
+            output.append("Function reference to \"");
+            output.append(name);
+            output.append('\"');
+        }
+        
+        output.append(" with arguments: (");
         for (Expression argument : arguments) {
             output.append('{');
             output.append(argument.toString());
             output.append("}, ");
         }
-        output.setLength(output.length() - 2);
-        output.append('}');
+        if (arguments.size() > 0) output.setLength(output.length() - 2);
+        output.append(')');
         return output.toString();
     }
     

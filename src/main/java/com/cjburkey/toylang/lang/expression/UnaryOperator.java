@@ -1,5 +1,7 @@
 package com.cjburkey.toylang.lang.expression;
 
+import com.cjburkey.toylang.lang.Operator;
+
 public class UnaryOperator extends Expression {
     
     public Operator operator;

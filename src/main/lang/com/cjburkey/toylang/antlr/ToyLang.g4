@@ -7,8 +7,9 @@ grammar ToyLang;
 // -- TOKENS -- //
 
 // Ignore comments and whitespace
-COMMENT         : '//' (~'\n')*? '\n' -> skip ;
+COMMENT         : '//' (~'\n')* -> skip ;
 WS              : [ \n\r\t]+ -> skip ;
+STRING          : '"' (~('\n' | '"'))*? '"' ;
 
 // Simple symbols
 PLUS            : '+' ;
@@ -17,15 +18,25 @@ TIMES           : '*' ;
 DIV             : '/' ;
 LPAR            : '(' ;
 RPAR            : ')' ;
-EQUAL           : '=' ;
 SEMI            : ';' ;
 COMMA           : ',' ;
 LBR             : '{' ;
 RBR             : '}' ;
+GTE             : '>=' ;
+LTE             : '<=' ;
+GT              : '>' ;
+LT              : '<' ;
+ISEQ            : '==' ;
+NOTEQ           : '!=' ;
+EQUAL           : '=' ;
 
 // Key words
 LET             : 'let' ;
 OF              : 'of' ;
+RETURN          : 'return' ;
+SELF            : ':self' ;
+IF              : 'if' ;
+ELSE            : 'else' ;
 
 // Literals
 fragment DIGIT  : [0-9] ;
@@ -49,21 +60,33 @@ arguments       : arguments COMMA expression
                 | expression
                 ;
 
-expression      : FLOAT                                                     # Float
-                | INTEGER                                                   # Int
-                | variableName                                              # VarRef
-                | variableName LPAR arguments? RPAR                         # FuncRef
-                | LPAR parameters? RPAR OF typeName LBR statement* RBR      # Func
-                | LPAR expression RPAR                                      # Par
-                | MINUS expression                                          # Neg
-                | expression op=(TIMES | DIV) expression                    # MulDiv
-                | expression op=(PLUS | MINUS) expression                   # AddSub
+ifStatement     : IF expression LBR statement* RBR
+                | ELSE expression? LBR statement* RBR
                 ;
 
-variableDec     : LET variableName OF typeName (EQUAL expression)? ;
+expression      : FLOAT                                                             # Float
+                | INTEGER                                                           # Int
+                | STRING                                                            # String
+                
+                | variableName                                                      # VarRef
+                | (variableName | SELF) LPAR arguments? RPAR                        # FuncRef
+                | LPAR parameters? RPAR (OF typeName)? LBR statement* RBR           # Func
+                | ifStatement                                                       # If
+                
+                | LPAR expression RPAR                                              # Par
+                | op=MINUS expression                                               # Neg
+                | expression op=(TIMES | DIV) expression                            # MulDiv
+                | expression op=(PLUS | MINUS) expression                           # AddSub
+                | expression op=(GTE | LTE | GT | LT | ISEQ | NOTEQ) expression     # Compare
+                ;
 
-statement       : variableDec SEMI      # VarDec
-                | expression SEMI       # Expr
+variableDec     : LET variableName (OF typeName)? EQUAL expression ;
+
+statement       : variableDec SEMI          # VarDec
+                | ifStatement               # IfState
+                | expression SEMI           # Expr
+                | RETURN expression SEMI    # Return
+                | expression                # Return
                 ;
 
 program         : statement* EOF ;

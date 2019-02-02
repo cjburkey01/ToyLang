@@ -13,7 +13,7 @@ public class FloatVal extends Expression {
     }
     
     public String toString() {
-        return "Number: " + value;
+        return String.format("Number: %.2f", value);
     }
     
 }

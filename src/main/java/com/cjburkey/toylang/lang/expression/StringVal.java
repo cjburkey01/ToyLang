@@ -15,7 +15,7 @@ public class StringVal extends Expression {
     
     @Override
     public String toString() {
-        return "\"" + value + "\"";
+        return "String: \"" + value + "\"";
     }
     
 }

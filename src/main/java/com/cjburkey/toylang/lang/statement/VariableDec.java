@@ -1,5 +1,6 @@
-package com.cjburkey.toylang.lang;
+package com.cjburkey.toylang.lang.statement;
 
+import com.cjburkey.toylang.lang.Statement;
 import com.cjburkey.toylang.lang.expression.Expression;
 
 public class VariableDec extends Statement {
@@ -12,6 +13,10 @@ public class VariableDec extends Statement {
         this.name = name;
         this.type = type;
         this.value = value;
+        
+        if (type == null && value != null) {
+            this.type = value.getType();
+        }
     }
     
     public VariableDec(String name, String type) {
