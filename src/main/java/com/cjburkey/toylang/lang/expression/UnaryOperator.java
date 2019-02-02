@@ -10,10 +10,12 @@ public class UnaryOperator extends Expression {
         this.value = value;
     }
     
+    @Override
     public String getType() {
         return value.getType();
     }
     
+    @Override
     public String toString() {
         return operator.token + value;
     }

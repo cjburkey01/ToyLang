@@ -1,7 +1,7 @@
 package com.cjburkey.toylang.lang;
 
-public class Statement {
-
-
+public abstract class Statement {
+    
+    public abstract String toString();
     
 }

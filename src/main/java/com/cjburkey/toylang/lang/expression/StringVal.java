@@ -8,10 +8,12 @@ public class StringVal extends Expression {
         this.value = value;
     }
     
+    @Override
     public String getType() {
         return "String";
     }
     
+    @Override
     public String toString() {
         return "\"" + value + "\"";
     }

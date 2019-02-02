@@ -18,4 +18,9 @@ public class VariableDec extends Statement {
         this(name, type, null);
     }
     
+    @Override
+    public String toString() {
+        return String.format("Define variable \"%s\" as {%s}", name, value);
+    }
+    
 }

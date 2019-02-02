@@ -1,0 +1,5 @@
+let add of Function = (a of Int32, b of Int32) of Int32 {
+    a + b;
+};
+
+let six of Int32 = add(4, 2);

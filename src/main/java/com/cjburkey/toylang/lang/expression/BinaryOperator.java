@@ -12,10 +12,12 @@ public class BinaryOperator extends Expression {
         this.valueB = valueB;
     }
     
+    @Override
     public String getType() {
         return valueA.getType();
     }
     
+    @Override
     public String toString() {
         return "{" + valueA + "} " + operator.token + " {" + valueB + "}";
     }

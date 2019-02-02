@@ -18,6 +18,7 @@ public class Compiler {
     private final StatementVisitor _statementVisitor = new StatementVisitor();
     private final VariableDecVisitor _variableDecVisitor = new VariableDecVisitor();
     private final ParametersVisitor _parametersVisitor = new ParametersVisitor();
+    private final ArgumentsVisitor _argumentsVisitor = new ArgumentsVisitor();
     private final ExpressionVisitor _expressionVisitor = new ExpressionVisitor();
     
     public Compiler start(ToyLangParser.ProgramContext programContext) {
@@ -27,8 +28,18 @@ public class Compiler {
     
     public class StatementVisitor extends TB<Statement> {
         @Override
+        public Optional<Statement> visit(ParseTree tree) {
+            Optional<Statement> value = super.visit(tree);
+            value.ifPresent(System.out::println);
+            return value;
+        }
+        @Override
         public Optional<Statement> visitVarDec(ToyLangParser.VarDecContext ctx) {
             return Optional.ofNullable(_variableDecVisitor.visit(ctx.variableDec()).orElse(null));
+        }
+        @Override
+        public Optional<Statement> visitExpr(ToyLangParser.ExprContext ctx) {
+            return Optional.ofNullable(_expressionVisitor.visit(ctx.expression()).orElse(null));
         }
     }
     
@@ -36,9 +47,6 @@ public class Compiler {
         @Override
         public Optional<VariableDec> visitVariableDec(ToyLangParser.VariableDecContext ctx) {
             Optional<Expression> expression = _expressionVisitor.visit(ctx.expression());
-            System.out.printf("Define variable \"%s\" as {%s}\n",
-                    ctx.variableName().getText(),
-                    expression.orElse(null));
             return Optional.of(new VariableDec(ctx.variableName().getText(),
                     ctx.typeName().getText(),
                     expression.orElse(null)));
@@ -48,12 +56,18 @@ public class Compiler {
     public class ParametersVisitor extends TB<List<Parameter>> {
         @Override
         public Optional<List<Parameter>> visitParameters(ToyLangParser.ParametersContext ctx) {
-            List<Parameter> parameters = new ArrayList<>();
+            List<Parameter> parameters = visit(ctx.parameters()).orElse(new ArrayList<>());
             parameters.add(new Parameter(ctx.parameter().variableName().getText(), ctx.parameter().typeName().getText()));
-            if (ctx.parameters() != null) {
-                parameters.addAll(visit(ctx.parameters()).orElse(new ArrayList<>()));
-            }
             return Optional.of(parameters);
+        }
+    }
+    
+    public class ArgumentsVisitor extends TB<List<Expression>> {
+        @Override
+        public Optional<List<Expression>> visitArguments(ToyLangParser.ArgumentsContext ctx) {
+            List<Expression> arguments = visit(ctx.arguments()).orElse(new ArrayList<>());
+            arguments.add(_expressionVisitor.visit(ctx.expression()).orElse(null));
+            return Optional.of(arguments);
         }
     }
     
@@ -94,6 +108,14 @@ public class Compiler {
                             .map(_statementVisitor::visit)
                             .map(e -> e.orElse(null))
                             .collect(Collectors.toList())));
+        }
+        @Override
+        public Optional<Expression> visitVarRef(ToyLangParser.VarRefContext ctx) {
+            return Optional.of(new VarRef(ctx.variableName().getText()));
+        }
+        @Override
+        public Optional<Expression> visitFuncRef(ToyLangParser.FuncRefContext ctx) {
+            return Optional.of(new FuncRef(ctx.variableName().getText(), _argumentsVisitor.visit(ctx.arguments()).orElse(null)));
         }
     }
     

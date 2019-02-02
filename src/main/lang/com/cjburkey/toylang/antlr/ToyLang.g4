@@ -10,21 +10,24 @@ grammar ToyLang;
 COMMENT         : '//' (~'\n')*? '\n' -> skip ;
 WS              : [ \n\r\t]+ -> skip ;
 
+// Simple symbols
 PLUS            : '+' ;
 MINUS           : '-' ;
 TIMES           : '*' ;
 DIV             : '/' ;
 LPAR            : '(' ;
 RPAR            : ')' ;
-
-LET             : 'let' ;
 EQUAL           : '=' ;
-OF              : 'of' ;
 SEMI            : ';' ;
 COMMA           : ',' ;
 LBR             : '{' ;
 RBR             : '}' ;
 
+// Key words
+LET             : 'let' ;
+OF              : 'of' ;
+
+// Literals
 fragment DIGIT  : [0-9] ;
 INTEGER         : DIGIT+ ;
 FLOAT           : INTEGER? '.' INTEGER+ ;
@@ -38,12 +41,18 @@ typeName        : IDENTIFIER ;
 
 parameter       : variableName OF typeName ;
 
-parameters      : parameter COMMA parameters
+parameters      : parameters COMMA parameter
                 | parameter
+                ;
+
+arguments       : arguments COMMA expression
+                | expression
                 ;
 
 expression      : FLOAT                                                     # Float
                 | INTEGER                                                   # Int
+                | variableName                                              # VarRef
+                | variableName LPAR arguments? RPAR                         # FuncRef
                 | LPAR parameters? RPAR OF typeName LBR statement* RBR      # Func
                 | LPAR expression RPAR                                      # Par
                 | MINUS expression                                          # Neg

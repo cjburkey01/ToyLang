@@ -22,7 +22,7 @@ public class ToyLang {
     
         Stream<String> stream = new BufferedReader(
                 new InputStreamReader(
-                        Objects.requireNonNull(ClassLoader.getSystemResourceAsStream("test.tl")))).lines();
+                        Objects.requireNonNull(ClassLoader.getSystemResourceAsStream("test.tlp")))).lines();
         Compiler compiler = INSTANCE.parse(stream.collect(Collectors.joining("\n")));
     }
     

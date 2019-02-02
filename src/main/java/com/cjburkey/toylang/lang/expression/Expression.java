@@ -1,9 +1,10 @@
 package com.cjburkey.toylang.lang.expression;
 
-public abstract class Expression {
+import com.cjburkey.toylang.lang.Statement;
+
+public abstract class Expression extends Statement {
     
     public abstract String getType();
-    public abstract String toString();
     
     public enum Operator {
         ADD("+"),

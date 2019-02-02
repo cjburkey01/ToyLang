@@ -12,12 +12,6 @@ project.ext.fastUtilVersion = '8.2.2'
 
 sourceCompatibility = 1.8
 sourceSets.main.java.srcDirs += ['generated-src/main/java', 'src/main/lang']
-//idea {
-//    module {
-//        // Marks the already(!) added srcDir as "generated"
-//        generatedSourceDirs += file('generated-src/main/java')
-//    }
-//}
 
 repositories {
     mavenCentral()
@@ -30,7 +24,7 @@ dependencies {
 
 generateGrammarSource {
     source = 'src/main/lang'
-    arguments += ['-visitor']
+    arguments += '-visitor'
     
     doLast {
         println 'Copying generated grammar lexer/parser files to source'
