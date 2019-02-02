@@ -1,0 +1,9 @@
+# Idea
+.idea
+
+# Gradle
+.gradle
+build
+
+# Antlr
+generated-src
