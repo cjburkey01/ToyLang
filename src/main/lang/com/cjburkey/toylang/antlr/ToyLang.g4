@@ -60,9 +60,9 @@ arguments       : arguments COMMA expression
                 | expression
                 ;
 
-ifStatement     : IF expression LBR statement* RBR
-                | ELSE expression? LBR statement* RBR
-                ;
+elseBranch      : ELSE expression? LBR statement* RBR ;
+
+ifStatement     : IF expression LBR statement* RBR elseBranch* ;
 
 expression      : FLOAT                                                             # Float
                 | INTEGER                                                           # Int

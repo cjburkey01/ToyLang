@@ -1,26 +1,40 @@
 package com.cjburkey.toylang.lang.expression;
 
+import com.cjburkey.toylang.ToyLangError;
+import com.cjburkey.toylang.lang.IExpression;
 import java.util.ArrayList;
-import java.util.Collection;
 import java.util.List;
 
 /**
  * Created by CJ Burkey on 2019/02/01
  */
-public class FuncRef extends Expression {
+public class FuncRef implements IExpression<Object> {
     
     public String name;
-    public final List<Expression> arguments = new ArrayList<>();
-    
-    public FuncRef(String name, Collection<Expression> arguments) {
+    public final List<IExpression<?>> arguments = new ArrayList<>();
+
+    public FuncRef(String name, List<IExpression<?>> arguments) {
         this.name = name;
         if (arguments != null) this.arguments.addAll(arguments);
     }
-    
+
+    @Override
+    public Class<Object> getClassType() {
+        return Object.class;
+    }
+
+    @Override
     public String getType() {
         return "Function";
     }
-    
+
+    @Override
+    public Object getValue() {
+        // TODO
+        return null;
+    }
+
+    @Override
     public String toString() {
         StringBuilder output = new StringBuilder();
         if (name == null) {
@@ -30,9 +44,9 @@ public class FuncRef extends Expression {
             output.append(name);
             output.append('\"');
         }
-        
+
         output.append(" with arguments: (");
-        for (Expression argument : arguments) {
+        for (IExpression<?> argument : arguments) {
             output.append('{');
             output.append(argument.toString());
             output.append("}, ");
@@ -40,6 +54,18 @@ public class FuncRef extends Expression {
         if (arguments.size() > 0) output.setLength(output.length() - 2);
         output.append(')');
         return output.toString();
+    }
+
+    @Override
+    public ToyLangError errorCheck() {
+        // TODO
+        return null;
+    }
+
+    @Override
+    public ToyLangError execute() {
+        // TODO
+        return null;
     }
     
 }

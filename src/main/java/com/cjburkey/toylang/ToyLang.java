@@ -13,57 +13,57 @@ import org.antlr.v4.runtime.CharStream;
 import org.antlr.v4.runtime.CharStreams;
 import org.antlr.v4.runtime.CommonTokenStream;
 
+@SuppressWarnings("unused")
 public class ToyLang {
-    
+
     public static final ToyLang INSTANCE = new ToyLang();
-    
+
     public static void main(String[] args) {
-        // Info or debug idk
-        System.out.println("ToyLang interpreter v0.0.1");
-        
+        System.out.printf("ToyLang interpreter v%s on JVM %s\n", "0.0.1", System.getProperty("java.version"));
+
         // Load from the example file
         String input = new BufferedReader(
                 new InputStreamReader(
                         Objects.requireNonNull(ClassLoader.getSystemResourceAsStream("test.tlp"))))
                 .lines()
                 .collect(Collectors.joining("\n"));
-        
-        // Start the compilation process
-        Compiler compiler = INSTANCE.parse(input);
+
+        // Start the parsing process
+        ProgramBuilder program = INSTANCE.parse(true, input);
     }
-    
+
     private ToyLangParser createParser(ToyLangLexer lexer) {
         ToyLangParser toyLangParser = new ToyLangParser(new CommonTokenStream(lexer));
         toyLangParser.removeErrorListeners();
-        toyLangParser.addErrorListener(CompilerErrorHandler.INSTANCE);
+        toyLangParser.addErrorListener(ParserErrorHandler.INSTANCE);
         return toyLangParser;
     }
-    
-    private Compiler parse(ToyLangParser parser) {
-        return new Compiler().start(parser.program());
+
+    private ProgramBuilder parse(boolean debug, ToyLangParser parser) {
+        return new ProgramBuilder(debug).parse(parser.program());
     }
-    
-    public Compiler parse(InputStream inputStream) throws IOException {
-        return parse(createParser(createLexer(inputStream)));
+
+    public ProgramBuilder parse(boolean debug, InputStream inputStream) throws IOException {
+        return parse(debug, createParser(createLexer(inputStream)));
     }
-    
-    public Compiler parse(String input) {
-        return parse(createParser(createLexer(input)));
+
+    public ProgramBuilder parse(boolean debug, String input) {
+        return parse(debug, createParser(createLexer(input)));
     }
-    
+
     private ToyLangLexer createLexer(CharStream charStream) {
         ToyLangLexer lexer = new ToyLangLexer(charStream);
         lexer.removeErrorListeners();
-        lexer.addErrorListener(CompilerErrorHandler.INSTANCE);
+        lexer.addErrorListener(ParserErrorHandler.INSTANCE);
         return lexer;
     }
-    
+
     private ToyLangLexer createLexer(InputStream inputStream) throws IOException {
         return createLexer(CharStreams.fromStream(inputStream, StandardCharsets.UTF_8));
     }
-    
+
     private ToyLangLexer createLexer(String input) {
         return createLexer(CharStreams.fromString(input));
     }
-    
+
 }

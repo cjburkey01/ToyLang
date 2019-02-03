@@ -7,9 +7,9 @@ import org.antlr.v4.runtime.Recognizer;
 /**
  * Created by CJ Burkey on 2019/02/01
  */
-public class CompilerErrorHandler extends ConsoleErrorListener {
-    
-    public static final CompilerErrorHandler INSTANCE = new CompilerErrorHandler();
+public class ParserErrorHandler extends ConsoleErrorListener {
+
+    public static final ParserErrorHandler INSTANCE = new ParserErrorHandler();
     
     private static boolean errored;
     

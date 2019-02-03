@@ -1,15 +1,16 @@
 package com.cjburkey.toylang.lang.statement;
 
-import com.cjburkey.toylang.lang.Statement;
-import com.cjburkey.toylang.lang.expression.Expression;
+import com.cjburkey.toylang.ToyLangError;
+import com.cjburkey.toylang.lang.IExpression;
+import com.cjburkey.toylang.lang.IStatement;
 
-public class VariableDec extends Statement {
+public class VariableDec implements IStatement {
     
     public String name;
     public String type;
-    public Expression value;
-    
-    public VariableDec(String name, String type, Expression value) {
+    public IExpression value;
+
+    public VariableDec(String name, String type, IExpression value) {
         this.name = name;
         this.type = type;
         this.value = value;
@@ -26,6 +27,18 @@ public class VariableDec extends Statement {
     @Override
     public String toString() {
         return String.format("Define variable \"%s\" as {%s}", name, value);
+    }
+
+    @Override
+    public ToyLangError errorCheck() {
+        // TODO
+        return null;
+    }
+
+    @Override
+    public ToyLangError execute() {
+        // TODO
+        return null;
     }
     
 }

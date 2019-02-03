@@ -1,27 +1,40 @@
 package com.cjburkey.toylang.lang.expression;
 
+import com.cjburkey.toylang.ToyLangError;
+import com.cjburkey.toylang.lang.IExpression;
 import com.cjburkey.toylang.lang.IScope;
+import com.cjburkey.toylang.lang.IStatement;
 import com.cjburkey.toylang.lang.Parameter;
 import com.cjburkey.toylang.lang.ScopeContainer;
-import com.cjburkey.toylang.lang.Statement;
 import java.util.ArrayList;
-import java.util.Collection;
+import java.util.List;
 
-public class FuncVal extends Expression implements IScope {
+public class FuncVal implements IScope, IExpression<Object> {
     
     public String type;
     public final ArrayList<Parameter> parameters = new ArrayList<>();
     private final ScopeContainer scope = new ScopeContainer();
-    
-    public FuncVal(String type, Collection<Parameter> parameters, Collection<Statement> statements) {
+
+    public FuncVal(String type, List<Parameter> parameters, List<IStatement> statements) {
         this.type = (type == null) ? "Void" : type;
         if (parameters != null) this.parameters.addAll(parameters);
         if (statements != null) scope.statements.addAll(statements);
+    }
+
+    @Override
+    public Class<Object> getClassType() {
+        return Object.class;
     }
     
     @Override
     public String getType() {
         return type;
+    }
+
+    @Override
+    public Object getValue() {
+        // TODO
+        return null;
     }
     
     @Override
@@ -36,7 +49,20 @@ public class FuncVal extends Expression implements IScope {
         output.append(type);
         return output.toString();
     }
-    
+
+    @Override
+    public ToyLangError errorCheck() {
+        // TODO
+        return null;
+    }
+
+    @Override
+    public ToyLangError execute() {
+        // TODO
+        return null;
+    }
+
+    @Override
     public ScopeContainer scope() {
         return scope;
     }

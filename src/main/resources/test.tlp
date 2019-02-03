@@ -1,23 +1,9 @@
-let add = (a of Int32, b of Int32) of Int32 {
-    a + b
-};
-
-let addition = add(4, 2);   // Int32: 6
-
-let test = (exampleLambda of Function) {
-    exampleLambda();
-};
-
-// Lambdas cannot see outside of their own scope.
-// For example, using the "addition" variable inside the anonymous function would product a compiler error
-test(() {
-    print("Hello!");
-});
-
-let fact = (num of Int64) of Int64 {
+let fact = (num of Number) of Number {
     if num <= 1 {
+        1
     }
-    //    1
-    //}
-    num * :self(num - 1)
+    num * :self(num - 1)    // Use ":self" to refer to the current function recursively
+                            // In this example, "fact" cannot be used because functions are just variables and the variable is not yet defined
 };
+
+let factorialExample = fact(5);     // Number: 120
