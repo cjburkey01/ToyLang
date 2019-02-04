@@ -5,7 +5,7 @@ import com.cjburkey.toylang.lang.IExpression;
 import com.cjburkey.toylang.lang.Operator;
 
 public class UnaryOperator implements IExpression<Object> {
-    
+
     public Operator operator;
     public IExpression value;
 
@@ -20,7 +20,7 @@ public class UnaryOperator implements IExpression<Object> {
     public Class<Object> getClassType() {
         return Object.class;
     }
-    
+
     @Override
     public String getType() {
         return value.getType();
@@ -30,7 +30,7 @@ public class UnaryOperator implements IExpression<Object> {
     public Object getValue() {
         return evaluatedValue;
     }
-    
+
     @Override
     public String toString() {
         return operator.token + value;
@@ -79,5 +79,5 @@ public class UnaryOperator implements IExpression<Object> {
         // No errors = muy bueno
         return null;
     }
-    
+
 }

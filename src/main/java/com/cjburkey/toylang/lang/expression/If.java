@@ -1,11 +1,7 @@
 package com.cjburkey.toylang.lang.expression;
 
 import com.cjburkey.toylang.ToyLangError;
-import com.cjburkey.toylang.lang.IExpression;
-import com.cjburkey.toylang.lang.IReturn;
-import com.cjburkey.toylang.lang.IScope;
-import com.cjburkey.toylang.lang.IStatement;
-import com.cjburkey.toylang.lang.ScopeContainer;
+import com.cjburkey.toylang.lang.*;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -105,5 +101,5 @@ public class If implements IScope, IExpression<Object> {
     public ScopeContainer scope() {
         return scope;
     }
-    
+
 }

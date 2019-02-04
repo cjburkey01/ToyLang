@@ -10,9 +10,9 @@ import com.cjburkey.toylang.lang.IStatement;
  */
 public class Return implements IReturn, IStatement {
 
-    public IExpression value;
+    public IExpression<?> value;
 
-    public Return(IExpression value) {
+    public Return(IExpression<?> value) {
         this.value = value;
     }
 
@@ -34,8 +34,8 @@ public class Return implements IReturn, IStatement {
     }
 
     @Override
-    public IExpression getValue() {
+    public IExpression<?> getValue() {
         return value;
     }
-    
+
 }

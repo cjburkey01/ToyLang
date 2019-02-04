@@ -21,5 +21,5 @@ public class ScopeContainer {
     public int hashCode() {
         return Objects.hash(statements);
     }
-    
+
 }

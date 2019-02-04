@@ -40,5 +40,5 @@ public class FloatVal implements IExpression<Double> {
     public ToyLangError execute() {
         return null;
     }
-    
+
 }

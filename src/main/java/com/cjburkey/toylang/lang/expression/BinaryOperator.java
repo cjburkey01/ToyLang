@@ -5,7 +5,7 @@ import com.cjburkey.toylang.lang.IExpression;
 import com.cjburkey.toylang.lang.Operator;
 
 public class BinaryOperator implements IExpression<Object> {
-    
+
     public Operator operator;
     public IExpression valueA;
     public IExpression valueB;
@@ -22,7 +22,7 @@ public class BinaryOperator implements IExpression<Object> {
     public Class<Object> getClassType() {
         return Object.class;
     }
-    
+
     @Override
     public String getType() {
         return valueA.getType();
@@ -32,7 +32,7 @@ public class BinaryOperator implements IExpression<Object> {
     public Object getValue() {
         return evaluatedValue;
     }
-    
+
     @Override
     public String toString() {
         return "{" + valueA + "} " + operator.token + " {" + valueB + "}";
@@ -95,5 +95,5 @@ public class BinaryOperator implements IExpression<Object> {
         // No errors = muy bueno
         return null;
     }
-    
+
 }

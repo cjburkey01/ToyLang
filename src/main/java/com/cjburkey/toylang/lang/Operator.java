@@ -7,13 +7,13 @@ import java.util.function.Function;
  * Created by CJ Burkey on 2019/02/02
  */
 public enum Operator {
-    
+
     // Math
     ADD("+", ((a, b) -> ((Double) a + (Double) b))),
     SUB("-", ((a) -> -((Double) a)), ((a, b) -> ((Double) a - (Double) b))),
     MUL("*", ((a, b) -> ((Double) a * (Double) b))),
     DIV("/", ((a, b) -> ((Double) a / (Double) b))),
-    
+
     // Comparison
     GT(">", ((a, b) -> ((Double) a > (Double) b))),
     LT("<", ((a, b) -> ((Double) a < (Double) b))),
@@ -21,9 +21,9 @@ public enum Operator {
     LTE("<=", ((a, b) -> ((Double) a <= (Double) b))),
     ISEQ("==", Object::equals),
     NOTEQ("!=", ((a, b) -> !a.equals(b))),
-    
+
     ;
-    
+
     public final String token;
     public final Function<Object, Object> unaryOperation;
     public final BiFunction<Object, Object, Object> binaryOperation;
@@ -41,12 +41,12 @@ public enum Operator {
     Operator(String token, BiFunction<Object, Object, Object> binaryOperation) {
         this(token, null, binaryOperation);
     }
-    
+
     public static Operator get(String token) {
         for (Operator operator : values()) {
             if (operator.token.equals(token)) return operator;
         }
         return null;
     }
-    
+
 }

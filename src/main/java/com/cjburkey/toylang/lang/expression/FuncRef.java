@@ -9,9 +9,9 @@ import java.util.List;
  * Created by CJ Burkey on 2019/02/01
  */
 public class FuncRef implements IExpression<Object> {
-    
-    public String name;
+
     public final List<IExpression<?>> arguments = new ArrayList<>();
+    public String name;
 
     public FuncRef(String name, List<IExpression<?>> arguments) {
         this.name = name;
@@ -67,5 +67,5 @@ public class FuncRef implements IExpression<Object> {
         // TODO
         return null;
     }
-    
+
 }

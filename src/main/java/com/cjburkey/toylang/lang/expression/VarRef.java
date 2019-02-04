@@ -7,9 +7,9 @@ import com.cjburkey.toylang.lang.IExpression;
  * Created by CJ Burkey on 2019/02/01
  */
 public class VarRef implements IExpression<Object> {
-    
+
     public String variableName;
-    
+
     public VarRef(String variableName) {
         this.variableName = variableName;
     }
@@ -47,5 +47,5 @@ public class VarRef implements IExpression<Object> {
         // TODO
         return null;
     }
-    
+
 }

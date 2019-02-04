@@ -1,19 +1,15 @@
 package com.cjburkey.toylang.lang.expression;
 
 import com.cjburkey.toylang.ToyLangError;
-import com.cjburkey.toylang.lang.IExpression;
-import com.cjburkey.toylang.lang.IScope;
-import com.cjburkey.toylang.lang.IStatement;
-import com.cjburkey.toylang.lang.Parameter;
-import com.cjburkey.toylang.lang.ScopeContainer;
+import com.cjburkey.toylang.lang.*;
 import java.util.ArrayList;
 import java.util.List;
 
 public class FuncVal implements IScope, IExpression<Object> {
-    
-    public String type;
+
     public final ArrayList<Parameter> parameters = new ArrayList<>();
     private final ScopeContainer scope = new ScopeContainer();
+    public String type;
 
     public FuncVal(String type, List<Parameter> parameters, List<IStatement> statements) {
         this.type = (type == null) ? "Void" : type;
@@ -25,7 +21,7 @@ public class FuncVal implements IScope, IExpression<Object> {
     public Class<Object> getClassType() {
         return Object.class;
     }
-    
+
     @Override
     public String getType() {
         return type;
@@ -36,7 +32,7 @@ public class FuncVal implements IScope, IExpression<Object> {
         // TODO
         return null;
     }
-    
+
     @Override
     public String toString() {
         StringBuilder output = new StringBuilder("Function of (");
@@ -66,5 +62,5 @@ public class FuncVal implements IScope, IExpression<Object> {
     public ScopeContainer scope() {
         return scope;
     }
-    
+
 }

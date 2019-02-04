@@ -4,9 +4,9 @@ import com.cjburkey.toylang.ToyLangError;
 import com.cjburkey.toylang.lang.IExpression;
 
 public class StringVal implements IExpression<String> {
-    
+
     public String value;
-    
+
     public StringVal(String value) {
         this.value = value;
     }
@@ -15,7 +15,7 @@ public class StringVal implements IExpression<String> {
     public Class<String> getClassType() {
         return String.class;
     }
-    
+
     @Override
     public String getType() {
         return "String";
@@ -25,7 +25,7 @@ public class StringVal implements IExpression<String> {
     public String getValue() {
         return value;
     }
-    
+
     @Override
     public String toString() {
         return "String: \"" + value + "\"";
@@ -40,5 +40,5 @@ public class StringVal implements IExpression<String> {
     public ToyLangError execute() {
         return null;
     }
-    
+
 }
