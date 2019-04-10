@@ -7,12 +7,12 @@ import com.cjburkey.toylang.lang.Operator;
 public class BinaryOperator implements IExpression<Object> {
 
     public Operator operator;
-    public IExpression valueA;
-    public IExpression valueB;
+    public IExpression<?> valueA;
+    public IExpression<?> valueB;
 
     private Object evaluatedValue = null;
 
-    public BinaryOperator(Operator operator, IExpression valueA, IExpression valueB) {
+    public BinaryOperator(Operator operator, IExpression<?> valueA, IExpression<?> valueB) {
         this.operator = operator;
         this.valueA = valueA;
         this.valueB = valueB;
@@ -69,9 +69,10 @@ public class BinaryOperator implements IExpression<Object> {
         }
 
         // TODO: CHECK IF TYPES CAN BE OPERATED UPON BY THIS OPERATOR
+        return new ToyLangError("Unimplemented error detection path");
 
         // No errors
-        return null;
+//        return null;
     }
 
     @Override

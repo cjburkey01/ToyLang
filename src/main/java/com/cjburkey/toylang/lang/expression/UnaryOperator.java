@@ -7,11 +7,11 @@ import com.cjburkey.toylang.lang.Operator;
 public class UnaryOperator implements IExpression<Object> {
 
     public Operator operator;
-    public IExpression value;
+    public IExpression<?> value;
 
     private Object evaluatedValue = null;
 
-    public UnaryOperator(Operator operator, IExpression value) {
+    public UnaryOperator(Operator operator, IExpression<?> value) {
         this.operator = operator;
         this.value = value;
     }

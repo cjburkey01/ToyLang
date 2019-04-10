@@ -8,12 +8,13 @@ import com.cjburkey.toylang.lang.IStatement;
 /**
  * Created by CJ Burkey on 2019/02/01
  */
-public class Return implements IReturn, IStatement {
+public class Return implements IReturn<Object>, IStatement {
 
-    public IExpression<?> value;
+    public IExpression<Object> value;
 
+    @SuppressWarnings("unchecked")
     public Return(IExpression<?> value) {
-        this.value = value;
+        this.value = (IExpression<Object>) value;
     }
 
     @Override
@@ -34,7 +35,7 @@ public class Return implements IReturn, IStatement {
     }
 
     @Override
-    public IExpression<?> getValue() {
+    public IExpression<Object> getValue() {
         return value;
     }
 

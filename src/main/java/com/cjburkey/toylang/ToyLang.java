@@ -29,7 +29,8 @@ public class ToyLang {
                 .collect(Collectors.joining("\n"));
 
         // Start the parsing process
-        ProgramBuilder program = INSTANCE.parse(true, input);
+        Program program = INSTANCE.parse(true, input);
+        program.execute();
     }
 
     private ToyLangParser createParser(ToyLangLexer lexer) {
@@ -39,15 +40,15 @@ public class ToyLang {
         return toyLangParser;
     }
 
-    private ProgramBuilder parse(boolean debug, ToyLangParser parser) {
-        return new ProgramBuilder(debug).parse(parser.program());
+    private Program parse(boolean debug, ToyLangParser parser) {
+        return new Program(debug).parse(parser.program());
     }
 
-    public ProgramBuilder parse(boolean debug, InputStream inputStream) throws IOException {
+    public Program parse(boolean debug, InputStream inputStream) throws IOException {
         return parse(debug, createParser(createLexer(inputStream)));
     }
 
-    public ProgramBuilder parse(boolean debug, String input) {
+    public Program parse(boolean debug, String input) {
         return parse(debug, createParser(createLexer(input)));
     }
 

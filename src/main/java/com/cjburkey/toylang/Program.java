@@ -6,17 +6,14 @@ import com.cjburkey.toylang.lang.*;
 import com.cjburkey.toylang.lang.expression.*;
 import com.cjburkey.toylang.lang.statement.Return;
 import com.cjburkey.toylang.lang.statement.VariableDec;
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Objects;
-import java.util.Optional;
+import java.util.*;
 import java.util.function.Function;
 import java.util.stream.Collectors;
 import org.antlr.v4.runtime.ParserRuleContext;
 import org.antlr.v4.runtime.tree.ParseTree;
 
 @SuppressWarnings("WeakerAccess")
-public class ProgramBuilder implements IScope {
+public class Program implements IScope {
 
     private final boolean debug;
 
@@ -28,16 +25,29 @@ public class ProgramBuilder implements IScope {
     private final ExpressionVisitor _expressionVisitor = new ExpressionVisitor();
 
     private final ScopeContainer mainScope = new ScopeContainer();
+    private final Stack<IScope> scopeStack = new Stack<>();
 
-    public ProgramBuilder(boolean debug) {
+    public Program(boolean debug) {
         this.debug = debug;
     }
 
-    public ProgramBuilder() {
+    public Program() {
         this(false);
     }
 
-    public ProgramBuilder parse(ToyLangParser.ProgramContext programContext) {
+    public void pushStack(IScope scope) {
+        scopeStack.push(scope);
+    }
+
+    public void popStack() {
+        scopeStack.pop();
+    }
+
+    public IScope getScope() {
+        return scopeStack.isEmpty() ? null : scopeStack.peek();
+    }
+
+    public Program parse(ToyLangParser.ProgramContext programContext) {
         programContext.statement().forEach(_statementVisitor::visit);
         return this;
     }
@@ -52,7 +62,8 @@ public class ProgramBuilder implements IScope {
 
     private boolean tryCall(boolean stopOnError, Function<IStatement, ToyLangError> function) {
         boolean errored = false;
-        for (IStatement statement : mainScope.statements) {
+        List<IStatement> statements = getScope().scope().statements;
+        for (IStatement statement : statements) {
             ToyLangError error = function.apply(statement);
             if (error != null) {
                 System.err.println(error);

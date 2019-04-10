@@ -14,10 +14,10 @@ public class If implements IScope, IExpression<Object> {
     public final List<If> elseBranches = new ArrayList<>();
     public boolean isExpression = false;
     public boolean isElse;
-    public IExpression condition;
+    public IExpression<?> condition;
     private String type = null;
 
-    public If(boolean isElse, IExpression condition, List<IStatement> scope, List<If> elseBranches) {
+    public If(boolean isElse, IExpression<?> condition, List<IStatement> scope, List<If> elseBranches) {
         this.isElse = isElse;
         this.condition = condition;
         if (scope != null) this.scope.statements.addAll(scope);
@@ -49,7 +49,7 @@ public class If implements IScope, IExpression<Object> {
         }
         for (IStatement statement : scope.statements) {
             if (IReturn.class.isAssignableFrom(statement.getClass())) {
-                IExpression value = ((IReturn) statement).getValue();
+                IExpression<?> value = ((IReturn) statement).getValue();
                 type = ((value == null) ? null : value.getType());
                 return;
             }
